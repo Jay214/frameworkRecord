@@ -40,11 +40,13 @@ const router = new VueRouter({
 把不同路由对应的组件分割成不同的代码块，然后当路由被访问的时候才加载对应组件，从而实现路由懒加载  
 ## 把组件按组分块  
 有时候我们想把某个路由下的所有组件都打包在同个异步 chunk 中。只需要 给 chunk 命名，提供 require.ensure 第三个参数作为 chunk 的名称:
+```
 const Foo = r => require.ensure([], () => r(require('./Foo.vue')), 'group-foo')
 const Bar = r => require.ensure([], () => r(require('./Bar.vue')), 'group-foo')
 const Baz = r => require.ensure([], () => r(require('./Baz.vue')), 'group-foo')  
-
+```
 ## 利用v-if和terminal  
+```
  <head>
    <!--some component -->
   <div v-if="showB">
@@ -68,7 +70,8 @@ const Baz = r => require.ensure([], () => r(require('./Baz.vue')), 'group-foo')
             this.showC = true;
         }, 0);
     }  
-    这个示例写起来略显啰嗦，但它已经实现了我们想要的顺序渲染的效果。页面会在组件初始化完后显示，然后再按顺序渲染其余的组件，整个页面渲染方式看起来是流式的。
+ ```
+这个示例写起来略显啰嗦，但它已经实现了我们想要的顺序渲染的效果。页面会在组件初始化完后显示，然后再按顺序渲染其余的组件，整个页面渲染方式看起来是流式的。
 
 有些人可能会担心v-if存在一个编译/卸载过程，会有性能影响。但这里并不需要担心，因为v-if是惰性的，只有当第一次值为true时才会开始初始化。  
 
